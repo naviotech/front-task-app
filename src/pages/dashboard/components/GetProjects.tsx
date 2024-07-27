@@ -1,18 +1,38 @@
-import { Fragment} from 'react'
-import { Link } from 'react-router-dom'
+import { Fragment, useState} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-import { DashboardProjectsAll } from '../../../types/types'
+import { DashboardProjectsAll, dataApi } from '../../../types/types'
+import { deleteProject } from '../../../services/projectApi'
+import { toast } from 'react-toastify'
+
 
 type GetProyectsProps = {
   data: DashboardProjectsAll
 }
 
 const GetProjects = ( {data} : GetProyectsProps) => {
+  const navigate = useNavigate()
+  const [projects, setProjects] = useState(data)
+  
+  
+  const handleClick = async (id:string)=>{
+    const response = await deleteProject(id) as dataApi
+    if(response.data){
+      toast.success(response.data)
+      setProjects(prevProjects => prevProjects.filter(project => project._id !== id))
+    }
+    if(typeof response.error === 'string'){
+      toast.error(response.error)
+    }
+    
+    navigate('/')
+  }
+
   return (
     <>
       <section className="flex flex-col items-center justify-center gap-10 mt-24 border border-gray-100 divide-y divide-gray-100 ">
-            {data && data.map((project) => (
+            {projects && projects.map((project) => (
               <article key={project._id} className="flex justify-between w-full max-w-screen-lg px-5 py-10 bg-white shadow-lg gap-x-6">
                 <div className="flex min-w-0 gap-x-4">
                   <div className="flex-auto min-w-0 space-y-2">
@@ -56,7 +76,7 @@ const GetProjects = ( {data} : GetProyectsProps) => {
                           <button
                             type='button'
                             className='block px-3 py-1 text-sm leading-6 text-red-500 hover:text-red-300'
-                            onClick={() => { }}
+                            onClick={()=>handleClick(project._id)}
                           >
                             Eliminar Proyecto
                           </button>
