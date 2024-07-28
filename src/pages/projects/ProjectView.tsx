@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import FormProject from './components/FormPorject'
+import FormProject from './components/FormProject'
 import { FormProjectData } from '../../types/types'
 import { createProject } from '../../services/projectApi'
 import { useNavigate } from 'react-router-dom'
@@ -32,7 +32,7 @@ const ProjectView = () => {
       <h1 className="text-2xl font-bold">Crear Proyecto</h1>
 
       <form
-      className='mt-10 bg-white shadow-lg p-10 rounded-lg'
+      className='p-10 mt-10 bg-white rounded-lg shadow-lg'
       onSubmit={handleSubmit(handleForm)}
       noValidate
       >
@@ -42,7 +42,7 @@ const ProjectView = () => {
         />
         <button 
           type='submit'
-          className='bg-fuchsia-500 font-bold w-full p-3 text-white uppercase cursor-pointer hover:bg-fuchsia-300 transition-colors rounded-xl'
+          className='w-full p-3 font-bold text-white uppercase transition-colors cursor-pointer bg-fuchsia-500 hover:bg-fuchsia-300 rounded-xl'
           >Crear Proyecto</button>
       </form>
     </div>

@@ -36,7 +36,7 @@ const GetProjects = ( {data} : GetProyectsProps) => {
               <article key={project._id} className="flex justify-between w-full max-w-screen-lg px-5 py-10 bg-white shadow-lg gap-x-6">
                 <div className="flex min-w-0 gap-x-4">
                   <div className="flex-auto min-w-0 space-y-2">
-                    <Link to={``}
+                    <Link to={`/projects/${project._id}`}
                       className="text-3xl font-bold text-gray-600 cursor-pointer hover:underline"
                     >{project.projectName}</Link>
                     <p className="text-sm text-gray-400">
@@ -61,7 +61,7 @@ const GetProjects = ( {data} : GetProyectsProps) => {
                         className="absolute right-0 z-10 w-56 py-2 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
                       >
                         <MenuItem>
-                          <Link to={``}
+                          <Link to={`/projects/${project._id}`}
                             className='block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-violet-500'>
                             Ver Proyecto
                           </Link>

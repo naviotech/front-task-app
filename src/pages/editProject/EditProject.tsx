@@ -19,7 +19,6 @@ const EditProject = () => {
     
     const updated = async ()=>{
       const response = await updateProject({projectData,id}) as dataApi
-      console.log(response)
       if(response.data){
         toast.success(response.data)
       }
@@ -70,7 +69,13 @@ const EditProject = () => {
             >Actualizar Proyecto</button>
         </form>
       </div>
-      ): <p className="text-4xl font-bold text-center uppercase text-black/50">{error}</p>}
+      ): 
+      (
+        <div className="flex flex-col gap-4">
+          <h1 className="text-4xl font-bold text-center uppercase text-black/50">Error 404</h1>
+          <p className="text-4xl font-bold text-center uppercase text-black/50">{error}</p>
+        </div>
+      )}
     </>
   )
 }

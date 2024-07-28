@@ -1,5 +1,5 @@
 import { DashboardProjects, FormProjectData, ProjectById } from "../types/types"
-import api from "../pages/utils/axios"
+import api from "../utils/axios"
 import { isAxiosError } from "axios"
 import { dataApi } from "../types/types"
 
