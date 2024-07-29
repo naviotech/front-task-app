@@ -27,6 +27,7 @@ const DetailProject = () => {
     const getInfo = async(id:string)=>{
       
       const response = await getProjectById(id) as ProjectByIdType
+      console.log(response)
       if(typeof(response) === "string"){
         setError(response)
       }else{

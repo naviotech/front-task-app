@@ -56,12 +56,12 @@ export const getProjectById = async (id:string)=> {
     const { data } = await api(`/projects/${id}`)
     
     const response = ProjectById.safeParse(data)
-    
     if(response.success){
       return response.data
     }
     
   } catch (error) {
+    
     let errorMessage : string 
     
     if (isAxiosError(error) && error?.response?.data?.errors[0]?.msg) {
