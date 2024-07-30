@@ -42,8 +42,8 @@ const DetailProject = () => {
     <>
       {infoProject && 
           <section>
-            <h1 className="text-2xl font-bold">{infoProject.projectName}</h1>
-            <p className="text-black/50">{infoProject.description}</p>
+            <h1 className="text-2xl font-bold capitalize">{infoProject.projectName}</h1>
+            <p className="capitalize text-black/50">{infoProject.description}</p>
             <article className="mt-14">
               <nav>
                 <button type="button" className="px-6 py-4 font-bold text-white uppercase transition-colors bg-violet-500 rounded-3xl hover:bg-violet-400"
