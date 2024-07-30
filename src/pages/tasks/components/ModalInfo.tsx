@@ -8,6 +8,7 @@ import { createTask } from "../../../services/taskApi"
 import { toast } from 'react-toastify'
 import { useNavigate } from "react-router-dom"
 
+
 type ModalInfoProps ={
   handleClick : () => void
 }
@@ -35,7 +36,7 @@ const ModalInfo = ({handleClick}: ModalInfoProps) => {
   } 
 
   return (
-    
+    <>
     <form onSubmit={handleSubmit(handleForm)} noValidate className="p-10 mt-10 bg-white rounded-lg shadow-lg">
       <legend className="mb-6 text-2xl font-bold">Nueva Tarea</legend>
       <FormTask
@@ -47,6 +48,7 @@ const ModalInfo = ({handleClick}: ModalInfoProps) => {
       className='w-full p-3 font-bold text-white uppercase transition-colors cursor-pointer bg-fuchsia-500 hover:bg-fuchsia-300 rounded-xl'
       >Guardar Tarea</button>
     </form>
+    </>
     
   )
 }

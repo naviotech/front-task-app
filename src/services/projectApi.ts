@@ -38,16 +38,12 @@ export const getAllProject = async ()=> {
     const { data } = await api("/projects")
     
     const response = DashboardProjects.safeParse(data)
-    
     if(response.success){
       return response.data
-      
     }
     
   } catch (error) {
     console.log(error)
-    
-    
   }
 }
 

@@ -50,7 +50,7 @@ const EditProject = () => {
   },[id, reset])
   return (
     <>
-      {project? (
+      {project && 
         <div className='max-w-3xl mx-auto'>
         <h1 className="text-2xl font-bold">Editar Proyecto</h1>
   
@@ -69,13 +69,15 @@ const EditProject = () => {
             >Actualizar Proyecto</button>
         </form>
       </div>
-      ): 
-      (
+      }
+      {error.length &&
+      
         <div className="flex flex-col gap-4">
           <h1 className="text-4xl font-bold text-center uppercase text-black/50">Error 404</h1>
           <p className="text-4xl font-bold text-center uppercase text-black/50">{error}</p>
         </div>
-      )}
+      
+      }
     </>
   )
 }

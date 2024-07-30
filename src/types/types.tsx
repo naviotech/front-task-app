@@ -12,7 +12,7 @@ export const projectSchema = z.object({
 export const DashboardProjects = z.array(projectSchema.extend({
   createdAt: z.string(),
   updatedAt: z.string(),
-  tasks: z.array(z.object({_id: z.string()}))
+  tasks: z.array(z.string())
 }))
 
 
@@ -41,7 +41,8 @@ export const taskSchema = z.object({
   project: z.object({_id: z.string()}),
   status: taskStatus
 })
-
+// eslint-disable-next-line react-refresh/only-export-components
+export const taskResponse = z.array(taskSchema)
 export type Task = z.infer<typeof taskSchema>
 export type TaskForm = Pick<Task, 'name' | 'description'>
 export type ProjectType = z.infer<typeof projectSchema>

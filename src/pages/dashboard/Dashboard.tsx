@@ -11,11 +11,11 @@ const Dashboard = () => {
     const getApi = async()=>{
       const response = await getAllProject()
       if(response){
-        setAllProjects(response)
+        return setAllProjects(response)
       }
     }
     getApi()
-  },[allProjects])
+  },[])
   return (
     <>
       <h1 className="text-2xl font-bold">Mis Proyectos</h1>

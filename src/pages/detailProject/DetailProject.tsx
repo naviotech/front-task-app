@@ -5,13 +5,14 @@ import { getProjectById } from "../../services/projectApi"
 import { useNavigate } from "react-router-dom"
 import ModalTask from "../tasks/components/ModalTask"
 import ModalInfo from "../tasks/components/ModalInfo"
+import TaskList from "../tasks/components/TaskList"
 
 const DetailProject = () => {
   const navigate = useNavigate()
   const params = useParams()
   const [id] = useState(params.projectId!)
   const [infoProject, setInfoProject] = useState<ProjectByIdType>()
-  const [error, setError] = useState<string>()
+  const [error, setError] = useState<string>("")
   const [modal, setModal] = useState(false)
 
   const handleClick = () => {
@@ -27,7 +28,7 @@ const DetailProject = () => {
     const getInfo = async(id:string)=>{
       
       const response = await getProjectById(id) as ProjectByIdType
-      console.log(response)
+      
       if(typeof(response) === "string"){
         setError(response)
       }else{
@@ -39,7 +40,7 @@ const DetailProject = () => {
   },[id])
   return (
     <>
-      {infoProject ? (
+      {infoProject && 
           <section>
             <h1 className="text-2xl font-bold">{infoProject.projectName}</h1>
             <p className="text-black/50">{infoProject.description}</p>
@@ -53,15 +54,19 @@ const DetailProject = () => {
             <div>
               {modal && <ModalTask handleModal={handleModal} children={<ModalInfo handleClick={handleClick}/>} /> }
             </div>
+            <article>
+              <TaskList id={id}/>
+            </article>
           </section>
           
-        ):
-        (
+          
+      }
+      {error? (
           <div className="flex flex-col gap-4">
             <h1 className="text-4xl font-bold text-center uppercase text-black/50">Error 404</h1>
             <p className="text-4xl font-bold text-center uppercase text-black/50">{error}</p>
           </div>
-        )
+        ) : ""
       }
     </>
   )
