@@ -22,18 +22,28 @@ const ModalInfo = ({handleClick}: ModalInfoProps) => {
   const [id] = useState(params.projectId!)
   const navigate = useNavigate()
 
-  const handleForm =async (formData : TaskForm)=>{
-    const response = await createTask({id, formData}) as dataApi
-    handleClick()
-    if(response.data){
-      toast.success(response.data)
+  const handleForm = async (formData: TaskForm) => {
+    try {
+      const response = await createTask({ id, formData }) as dataApi
+      
+      if (response.data) {
+        toast.success(response.data)
+        
+        navigate(`/projects/${id}`)
+        
+      }
+  
+      
+      if (typeof response.error === 'string') {
+        toast.error(response.error)
+      }
+    } catch (error) {
+      
+      toast.error("Ocurrió un error al crear la tarea");
+    } finally {
+      handleClick();
     }
-    if(typeof response.error === 'string'){
-      toast.error(response.error)
-    }
-    
-    navigate(`/projects/${id}`)
-  } 
+  }
 
   return (
     <>

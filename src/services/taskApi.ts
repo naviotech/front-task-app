@@ -66,3 +66,35 @@ export const getTask = async (id:string)=> {
      
   }
 }
+
+type DeleteTaskProps={
+  idProject: string,
+  idTask: string
+}
+export const deleteTask = async ({idProject, idTask}: DeleteTaskProps)=> {
+  try {
+    const { data } = await api.delete(`/projects/${idProject}/tasks/${idTask}`)
+    const response : dataApi = {
+      data: data,
+      error: null
+    }
+    return response
+    
+  } catch (error) {
+    let errorMessage : string 
+    
+    if (isAxiosError(error) && error?.response?.data?.errors[0]?.msg) {
+      // Es un error de Axios con mensaje de respuesta
+      errorMessage = error.response.data.errors[0].msg
+    } else if (error instanceof Error) {
+      // Es un error estándar
+      errorMessage = error.message
+    } else {
+      // Es algún otro tipo de error
+      errorMessage = String(error)
+    }
+
+    return errorMessage
+     
+  }
+}

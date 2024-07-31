@@ -1,32 +1,50 @@
 import { useEffect, useState } from "react"
-import { getTask } from "../../../services/taskApi"
-import { Task } from "../../../types/types"
+import { deleteTask, getTask } from "../../../services/taskApi"
+import { dataApi, Task } from "../../../types/types"
 import TaskCard from "./TaskCard"
+import { useParams } from "react-router-dom"
+import { toast } from "react-toastify"
 
 type TasklistProps={
   id: string
 }
 
-
 const TaskList = ({id} : TasklistProps) => {
+  const params = useParams()
+  const [idProject] = useState(params.projectId!)
+
   const [pending, setPending] = useState<Task[]>()
   const [onHold, setOnHold] = useState<Task[]>()
   const [inProgress, setInProgress] = useState<Task[]>()
   const [underReview, setUnderReview] = useState<Task[]>()
   const [completed, setCompleted] = useState<Task[]>()
   
-
-  useEffect(()=>{
-    const getTasks = async(id:string)=>{
-      const response = await getTask(id) as Task[]
-      if (response){
-        setPending(response.filter(task=> task.status === "pending"))
-        setOnHold(response.filter(task=> task.status === "onHold"))
-        setInProgress(response.filter(task=> task.status === "inProgress"))
-        setUnderReview(response.filter(task=> task.status === "underReview"))
-        setCompleted(response.filter(task=> task.status === "completed"))
-      }
+  const getTasks = async(id:string)=>{
+    const response = await getTask(id) as Task[]
+    if (response){
+      setPending(response.filter(task=> task.status === "pending"))
+      setOnHold(response.filter(task=> task.status === "onHold"))
+      setInProgress(response.filter(task=> task.status === "inProgress"))
+      setUnderReview(response.filter(task=> task.status === "underReview"))
+      setCompleted(response.filter(task=> task.status === "completed"))
     }
+  }
+
+  const handleClickDelete = async(id:string)=>{
+    const response = await deleteTask({idProject, idTask: id }) as dataApi
+    if(response.data){
+      toast.success(response.data)
+      setPending(pending?.filter(task => task._id !== id))
+      setOnHold(onHold?.filter(task => task._id !== id))
+      setInProgress(inProgress?.filter(task => task._id !== id))
+      setUnderReview(underReview?.filter(task => task._id !== id))
+      setCompleted(completed?.filter(task => task._id !== id))
+    }
+    if(typeof response.error === 'string'){
+      toast.error(response.error)
+    }
+  }
+  useEffect(()=>{
     getTasks(id)
   },[id])
   return (
@@ -37,7 +55,7 @@ const TaskList = ({id} : TasklistProps) => {
           {
             pending?.length ? (
               pending.map((task) => (
-                <TaskCard key={task._id} id={task._id} task={task}/>
+                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete}/>
               ))
             ) : <p className="text-slate-500">No hay Tareas</p>
           }
@@ -50,7 +68,7 @@ const TaskList = ({id} : TasklistProps) => {
           {
             onHold?.length ? (
               onHold.map((task) => (
-                <TaskCard key={task._id} id={task._id} task={task}/>
+                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete}/>
               ))
             ) : <p className="text-slate-500">No hay Tareas</p>
           }
@@ -62,7 +80,7 @@ const TaskList = ({id} : TasklistProps) => {
           {
             inProgress?.length ? (
               inProgress.map((task) => (
-                <TaskCard key={task._id} id={task._id} task={task}/>
+                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete}/>
               ))
             ) : <p className="text-slate-500">No hay Tareas</p>
           }
@@ -74,7 +92,7 @@ const TaskList = ({id} : TasklistProps) => {
           {
             underReview?.length ? (
               underReview.map((task) => (
-                <TaskCard key={task._id} id={task._id} task={task}/>
+                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete}/>
               ))
             ) : <p className="text-slate-500">No hay Tareas</p>
           }
@@ -86,7 +104,7 @@ const TaskList = ({id} : TasklistProps) => {
           {
             completed?.length ? (
               completed.map((task) => (
-                <TaskCard key={task._id} id={task._id} task={task}/>
+                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete}/>
               ))
             ) : <p className="text-slate-500">No hay Tareas</p>
           }

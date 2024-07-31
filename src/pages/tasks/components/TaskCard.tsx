@@ -3,12 +3,15 @@ import { Menu, Transition } from "@headlessui/react"
 import { Fragment } from "react"
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid"
 
+
 type TaskCardProps = {
   task: Task
   id: string
+  handleClickDelete : (id: string) => Promise<void>
 }
 
-const TaskCard = ({id,task}:TaskCardProps) => {
+const TaskCard = ({id,task, handleClickDelete}:TaskCardProps) => {
+  
   return (
     <article key={id} className="flex items-center justify-between w-full max-w-screen-sm gap-3 p-5 bg-white border border-slate-300">
       <div className="flex flex-col min-w-0 gap-y-e">
@@ -30,22 +33,23 @@ const TaskCard = ({id,task}:TaskCardProps) => {
                 leaveFrom="transform opacity-100 scale-100" leaveTo="transform opacity-0 scale-95">
                 <Menu.Items
                     className="absolute right-0 z-10 w-56 py-2 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                    <Menu.Item>
+                    <Menu>
                         <button type='button' className='block px-3 py-1 text-sm leading-6 text-gray-900'>
                             Ver Tarea
                         </button>
-                    </Menu.Item>
-                    <Menu.Item>
+                    </Menu>
+                    <Menu>
                         <button type='button' className='block px-3 py-1 text-sm leading-6 text-gray-900'>
                             Editar Tarea
                         </button>
-                    </Menu.Item>
+                    </Menu>
 
-                    <Menu.Item>
-                        <button type='button' className='block px-3 py-1 text-sm leading-6 text-red-500'>
+                    <Menu>
+                        <button type='button' className='block px-3 py-1 text-sm leading-6 text-red-500'
+                        onClick={()=>handleClickDelete(id)}>
                             Eliminar Tarea
                         </button>
-                    </Menu.Item>
+                    </Menu>
                 </Menu.Items>
             </Transition>
         </Menu>
