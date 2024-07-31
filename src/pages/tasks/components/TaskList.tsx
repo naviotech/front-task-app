@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { deleteTask, getTask } from "../../../services/taskApi"
-import { dataApi, Task } from "../../../types/types"
+import useListContext from "../../../hooks/useListContext"
+import { deleteTask } from "../../../services/taskApi"
+import { dataApi} from "../../../types/types"
 import TaskCard from "./TaskCard"
 import { useParams } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -12,24 +13,8 @@ type TasklistProps={
 const TaskList = ({id} : TasklistProps) => {
   const params = useParams()
   const [idProject] = useState(params.projectId!)
-
-  const [pending, setPending] = useState<Task[]>()
-  const [onHold, setOnHold] = useState<Task[]>()
-  const [inProgress, setInProgress] = useState<Task[]>()
-  const [underReview, setUnderReview] = useState<Task[]>()
-  const [completed, setCompleted] = useState<Task[]>()
+  const {getTasks, pending, setPending, onHold, setOnHold, inProgress, setInProgress, underReview, setUnderReview, completed, setCompleted } = useListContext()
   
-  const getTasks = async(id:string)=>{
-    const response = await getTask(id) as Task[]
-    if (response){
-      setPending(response.filter(task=> task.status === "pending"))
-      setOnHold(response.filter(task=> task.status === "onHold"))
-      setInProgress(response.filter(task=> task.status === "inProgress"))
-      setUnderReview(response.filter(task=> task.status === "underReview"))
-      setCompleted(response.filter(task=> task.status === "completed"))
-    }
-  }
-
   const handleClickDelete = async(id:string)=>{
     const response = await deleteTask({idProject, idTask: id }) as dataApi
     if(response.data){
@@ -44,9 +29,12 @@ const TaskList = ({id} : TasklistProps) => {
       toast.error(response.error)
     }
   }
+
   useEffect(()=>{
+    
     getTasks(id)
-  },[id])
+  },[id, setCompleted, setInProgress, setOnHold, setPending, setUnderReview, getTasks])
+  
   return (
     <section className="flex flex-col items-center justify-center w-full gap-20 mt-20 ex-col lg:gap-10 lg:grid lg:grid-cols-5 lg:items-start">
       <section className="flex flex-col items-center justify-center w-full gap-4">

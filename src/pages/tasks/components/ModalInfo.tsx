@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import FormTask from "./FormTask"
-
+import useListContext from "../../../hooks/useListContext"
 import { useParams } from "react-router-dom"
 import { useState } from "react"
 import { dataApi, TaskForm } from "../../../types/types"
@@ -21,14 +21,16 @@ const ModalInfo = ({handleClick}: ModalInfoProps) => {
   const params = useParams()
   const [id] = useState(params.projectId!)
   const navigate = useNavigate()
-
+  const { getTasks } = useListContext()
+  
   const handleForm = async (formData: TaskForm) => {
+    
     try {
       const response = await createTask({ id, formData }) as dataApi
-      
+      getTasks(id)
       if (response.data) {
         toast.success(response.data)
-        
+        await getTasks(id)
         navigate(`/projects/${id}`)
         
       }
