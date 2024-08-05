@@ -41,6 +41,17 @@ export const taskSchema = z.object({
   project: z.object({_id: z.string()}),
   status: taskStatus
 })
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const taskById = z.object({
+  _id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  project:  z.string(),
+  status: taskStatus
+})
+// eslint-disable-next-line react-refresh/only-export-components
+export type TaskId = z.infer<typeof taskById>
 // eslint-disable-next-line react-refresh/only-export-components
 export const taskResponse = z.array(taskSchema)
 export type Task = z.infer<typeof taskSchema>

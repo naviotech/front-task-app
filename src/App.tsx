@@ -18,6 +18,7 @@ function App() {
             <Route path="/projects/create" element={<ProjectView/>}/>
             <Route path="/projects/:projectId/edit" element={<EditProject/>}/>
             <Route path="/projects/:projectId" element={<DetailProject/>}/>
+            <Route path="/projects/:projectId/:taskId" element={<DetailProject/>}/>
           </Route>
         </Routes>
       </ListProvider>

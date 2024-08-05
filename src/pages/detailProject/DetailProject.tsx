@@ -17,12 +17,14 @@ const DetailProject = () => {
 
   const handleClick = () => {
     setModal(!modal)
+    
   }
   const handleModal=(e: React.MouseEvent<Element, MouseEvent>)=>{
     const target = e.target as HTMLElement
     if(target.matches('.fixed')){
       handleClick()
     }
+    
   }
   useEffect(()=>{
     const getInfo = async(id:string)=>{
@@ -52,7 +54,7 @@ const DetailProject = () => {
               </nav>
             </article>
             <div>
-              {modal && <ModalTask handleModal={handleModal} children={<ModalInfo handleClick={handleClick}/>} /> }
+              {modal && <ModalTask handleModal={handleModal} children={<ModalInfo handleClick={handleClick}/>}/> }
             </div>
             <article>
               <TaskList id={id}/>

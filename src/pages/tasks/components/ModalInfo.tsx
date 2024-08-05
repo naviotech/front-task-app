@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom"
 
 
 type ModalInfoProps ={
-  handleClick : () => void
+  handleClick : (id:string) => void
 }
 const ModalInfo = ({handleClick}: ModalInfoProps) => {
   const initialValues = {
@@ -43,7 +43,8 @@ const ModalInfo = ({handleClick}: ModalInfoProps) => {
       
       toast.error("Ocurrió un error al crear la tarea");
     } finally {
-      handleClick();
+      handleClick(id);
+      
     }
   }
 
