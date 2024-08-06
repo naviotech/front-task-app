@@ -143,7 +143,7 @@ export type UpdateTaskProps = {
 export const updateTask = async({idProject,idTask,formData} : UpdateTaskProps)=>{
   try {
     const { data } = await api.put(`/projects/${idProject}/tasks/${idTask}`, formData)
-    console.log(data)
+    
     const response : dataApi = {
       data: data,
       error: null

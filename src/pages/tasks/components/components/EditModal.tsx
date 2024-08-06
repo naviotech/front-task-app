@@ -6,6 +6,7 @@ import { getTaskById, updateTask } from '../../../../services/taskApi'
 import { dataApi, TaskForm } from '../../../../types/types'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import useListContext from '../../../../hooks/useListContext'
 
 
 type ModalInfoProps ={
@@ -14,6 +15,7 @@ type ModalInfoProps ={
 
 
 const EditModal = ({handleClick}:ModalInfoProps) => {
+  const {setUpdate} = useListContext()
   const navigate = useNavigate()
   const params = useParams()
   const [taskId] = useState(params.taskId!)
@@ -25,6 +27,7 @@ const EditModal = ({handleClick}:ModalInfoProps) => {
     handleClick()
     const response = await updateTask({idProject:projectId, idTask:taskId, formData:taskData}) as dataApi
     if(response.data){
+      setUpdate(true)
       toast.success(response.data)
     }
     if(typeof response.error === 'string'){
@@ -45,7 +48,6 @@ const EditModal = ({handleClick}:ModalInfoProps) => {
           })
         }
         
-      
     }
     getById()
   },[taskId, reset, projectId])

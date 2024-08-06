@@ -15,9 +15,9 @@ type TasklistProps={
 const TaskList = ({id} : TasklistProps) => {
   const params = useParams()
   const [idProject] = useState(params.projectId!)
-  const {getTasks, pending, setPending, onHold, setOnHold, inProgress, setInProgress, underReview, setUnderReview, completed, setCompleted } = useListContext()
-  
+  const {setId, update, getTasks, pending, setPending, onHold, setOnHold, inProgress, setInProgress, underReview, setUnderReview, completed, setCompleted } = useListContext()
   const [modal, setModal] = useState(false)
+  
 
   const handleClick = () => {
     setModal(!modal)
@@ -45,9 +45,19 @@ const TaskList = ({id} : TasklistProps) => {
   }
 
   useEffect(()=>{
-    
-    getTasks(id)
-  },[id, setCompleted, setInProgress, setOnHold, setPending, setUnderReview, getTasks])
+    setId(id)
+    const showTasks = async() =>{
+      await getTasks(id)
+    }
+    showTasks()
+
+    if(update){
+      const updating = async()=>{
+        await getTasks(id)
+      }
+      updating()
+    }
+  },[id, getTasks, update, setId])
   
   return (
     <section className="flex flex-col items-center justify-center w-full gap-20 mt-20 ex-col lg:gap-10 lg:grid lg:grid-cols-5 lg:items-start">

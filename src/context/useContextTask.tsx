@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState, useCallback } from "react";
+import React, { createContext, ReactNode, useState, useCallback, useEffect } from "react";
 import { Task } from "../types/types";
 import { getTask } from "../services/taskApi";
 
@@ -16,6 +16,10 @@ export type ListContextType = {
   completed: Task[],
   setCompleted: React.Dispatch<React.SetStateAction<Task[]>>,
   getTasks: (id: string) => Promise<void>
+  update: boolean,
+  setUpdate: React.Dispatch<React.SetStateAction<boolean>>,
+  id: string | null,
+  setId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 type ListProviderProps = {
@@ -33,7 +37,12 @@ export const ListContext = createContext<ListContextType>({
   setUnderReview: () => {},
   completed: [],
   setCompleted: () => {},
-  getTasks: async () => {}
+  getTasks: async () => {},
+  update: false,
+  setUpdate: ()=>{},
+  id: null,
+  setId: () => {}
+  
 })
 
 export const ListProvider = ({ children }: ListProviderProps) => {
@@ -42,6 +51,8 @@ export const ListProvider = ({ children }: ListProviderProps) => {
   const [inProgress, setInProgress] = useState<Task[]>([])
   const [underReview, setUnderReview] = useState<Task[]>([])
   const [completed, setCompleted] = useState<Task[]>([])
+  const [update, setUpdate] = useState(false)
+  const [id, setId] = useState<string | null>(null)
 
   const getTasks = useCallback(async (id: string) => {
     const response = await getTask(id) as Task[]
@@ -54,8 +65,18 @@ export const ListProvider = ({ children }: ListProviderProps) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (update && id) {
+      const fetchTasks = async () => {
+        await getTasks(id);
+        setUpdate(false)
+      };
+      fetchTasks();
+    }
+  }, [update, getTasks, id])
+
   return (
-    <ListContext.Provider value={{ pending, setPending, onHold, setOnHold, inProgress, setInProgress, underReview, setUnderReview, completed, setCompleted, getTasks }}>
+    <ListContext.Provider value={{id, setId, update, setUpdate , pending, setPending, onHold, setOnHold, inProgress, setInProgress, underReview, setUnderReview, completed, setCompleted, getTasks }}>
       {children}
     </ListContext.Provider>
   )
