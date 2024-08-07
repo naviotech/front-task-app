@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import useListContext from '../../../../hooks/useListContext'
 import StatusForm from './StatusForm'
-
+import { formatedDate } from '../../../../utils/dateFormater'
 
 type ModalInfoProps ={
   handleClickStatus : () => void
@@ -24,6 +24,13 @@ const EditStatusModal = ({handleClickStatus}:ModalInfoProps) => {
   const [taskId] = useState(params.taskId!)
   const [projectId] = useState(params.projectId!)
   const [status, setStatus] = useState<TaskStatus>()
+
+  const [details, setDetails] = useState({
+    name: "",
+    description : "",
+    createAt: "",
+    updatedAt: ""
+  })
   
   const {register , handleSubmit, formState:{errors},reset} = useForm<TaskStatusProps>()
 
@@ -54,6 +61,12 @@ const EditStatusModal = ({handleClickStatus}:ModalInfoProps) => {
           status: response.status,
         })
         setStatus(response.status)
+        setDetails({
+          name: response.name,
+          description: response.description,
+          createAt: response.createdAt,
+          updatedAt: response.updatedAt
+        })
       }
         
     }
@@ -64,6 +77,20 @@ const EditStatusModal = ({handleClickStatus}:ModalInfoProps) => {
       
       <form onSubmit={handleSubmit(handleForm)} noValidate className="p-10 mt-10 bg-white rounded-lg shadow-lg">
         <legend className="mb-6 text-2xl font-bold">Editar Estado</legend>
+        <article className='mb-6'>
+          <h1 className="text-xl font-bold text-gray-500 capitalize ">{details.name}</h1>
+          <p className="text-gray-500 capitalize ">{details.description}</p>
+          <div>
+            <p className="text-gray-500 capitalize ">Tarea creada:</p>
+            <p className='text-sm font-bold text-gray-700'>{formatedDate(details.createAt)}</p>
+          </div>
+          <div>
+            <p className="text-gray-500 capitalize ">Ultima actualización:</p>
+            <p className='text-sm font-bold text-gray-700'>{formatedDate(details.updatedAt)}</p>
+          </div>
+        </article>
+        
+        
         <StatusForm
         register={register}
         errors={errors}
