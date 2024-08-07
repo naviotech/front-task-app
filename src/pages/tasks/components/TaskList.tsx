@@ -7,6 +7,8 @@ import { useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import ModalTaskEdit from "./ModalTaskEdit"
 import EditModal from "./components/EditModal"
+import EditStatusModal from "./components/EditStatusModal"
+import ModalStatus from "./ModalStatus"
 
 type TasklistProps={
   id: string
@@ -17,15 +19,26 @@ const TaskList = ({id} : TasklistProps) => {
   const [idProject] = useState(params.projectId!)
   const {setId, update, getTasks, pending, setPending, onHold, setOnHold, inProgress, setInProgress, underReview, setUnderReview, completed, setCompleted } = useListContext()
   const [modal, setModal] = useState(false)
+  const [modalStatus, setModalStatus] = useState(false)
   
 
   const handleClick = () => {
     setModal(!modal)
   }
+  const handleClickStatus = () =>{
+    setModalStatus(!modalStatus)
+  }
   const handleModal=(e: React.MouseEvent<Element, MouseEvent>)=>{
     const target = e.target as HTMLElement
     if(target.matches('.fixed')){
       handleClick()
+    }
+  }
+
+  const handleModalStatus=(e: React.MouseEvent<Element, MouseEvent>)=>{
+    const target = e.target as HTMLElement
+    if(target.matches('.fixed')){
+      handleClickStatus()
     }
   }
   
@@ -67,7 +80,7 @@ const TaskList = ({id} : TasklistProps) => {
           {
             pending?.length ? (
               pending.map((task) => (
-                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete} handleClick={handleClick}/>
+                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete} handleClick={handleClick} handleClickStatus={handleClickStatus}/>
               ))
             ) : <p className="text-slate-500">No hay Tareas</p>
           }
@@ -80,7 +93,7 @@ const TaskList = ({id} : TasklistProps) => {
           {
             onHold?.length ? (
               onHold.map((task) => (
-                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete} handleClick={handleClick}/>
+                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete} handleClick={handleClick} handleClickStatus={handleClickStatus}/>
               ))
             ) : <p className="text-slate-500">No hay Tareas</p>
           }
@@ -92,7 +105,7 @@ const TaskList = ({id} : TasklistProps) => {
           {
             inProgress?.length ? (
               inProgress.map((task) => (
-                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete} handleClick={handleClick}/>
+                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete} handleClick={handleClick} handleClickStatus={handleClickStatus}/>
               ))
             ) : <p className="text-slate-500">No hay Tareas</p>
           }
@@ -104,7 +117,7 @@ const TaskList = ({id} : TasklistProps) => {
           {
             underReview?.length ? (
               underReview.map((task) => (
-                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete} handleClick={handleClick}/>
+                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete} handleClick={handleClick} handleClickStatus={handleClickStatus}/>
               ))
             ) : <p className="text-slate-500">No hay Tareas</p>
           }
@@ -116,7 +129,7 @@ const TaskList = ({id} : TasklistProps) => {
           {
             completed?.length ? (
               completed.map((task) => (
-                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete} handleClick={handleClick}/>
+                <TaskCard key={task._id} id={task._id} task={task} handleClickDelete={handleClickDelete} handleClick={handleClick} handleClickStatus={handleClickStatus}/>
               ))
             ) : <p className="text-slate-500">No hay Tareas</p>
           }
@@ -124,6 +137,7 @@ const TaskList = ({id} : TasklistProps) => {
       </section>
       <article>
       {modal && <ModalTaskEdit handleModal={handleModal} children={<EditModal handleClick={handleClick}/>}/> }
+      {modalStatus && <ModalStatus handleModalStatus={handleModalStatus} children={<EditStatusModal handleClickStatus={handleClickStatus}/>}/> }
       </article>
     </section>
   )

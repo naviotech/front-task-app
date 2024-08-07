@@ -50,13 +50,21 @@ export const taskById = z.object({
   project:  z.string(),
   status: taskStatus
 })
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const taskByIdStatus = taskById.extend({
+  createdAt: z.string(),
+  updatedAt: z.string(),
+})
 // eslint-disable-next-line react-refresh/only-export-components
 export type TaskId = z.infer<typeof taskById>
 // eslint-disable-next-line react-refresh/only-export-components
 export const taskResponse = z.array(taskSchema)
+export type TaskByStatus = z.infer<typeof taskByIdStatus>
 export type Task = z.infer<typeof taskSchema>
 export type TaskForm = Pick<Task, 'name' | 'description'>
 export type ProjectType = z.infer<typeof projectSchema>
 export type FormProjectData = Pick< ProjectType, 'clientName' | 'description' | 'projectName'>
 export type DashboardProjectsAll = z.infer<typeof DashboardProjects>
 export type ProjectByIdType = z.infer<typeof ProjectById>
+export type TaskStatus = z.infer<typeof taskStatus>

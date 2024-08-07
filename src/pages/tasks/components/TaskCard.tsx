@@ -11,10 +11,11 @@ type TaskCardProps = {
   task: Task
   id: string
   handleClickDelete : (id: string) => Promise<void>
-  handleClick : () => void
+  handleClick : () => void,
+  handleClickStatus : () => void
 }
 
-const TaskCard = ({id,task, handleClickDelete, handleClick}:TaskCardProps) => {
+const TaskCard = ({id,task, handleClickDelete, handleClick, handleClickStatus}:TaskCardProps) => {
   const navigate = useNavigate()
   const params = useParams()
   const [idProject] = useState(params.projectId!)
@@ -31,7 +32,13 @@ const TaskCard = ({id,task, handleClickDelete, handleClick}:TaskCardProps) => {
   }
   
 
-  
+  const handleEditStatus = () => {
+    
+    handleClickStatus();
+    navigate(`/projects/${idProject}/${id}/status`)
+    
+    return taskId
+  }
   
  
   return (
@@ -58,7 +65,8 @@ const TaskCard = ({id,task, handleClickDelete, handleClick}:TaskCardProps) => {
             <Menu.Items 
                 className="absolute right-0 z-10 w-56 py-2 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                 <Menu>
-                    <button type='button' className='block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-violet-500'>
+                    <button type='button' className='block px-3 py-1 text-sm leading-6 text-gray-900 hover:text-violet-500'
+                    onClick={() =>  {handleEditStatus(), setVisible(false)}}>
                         Ver Tarea
                     </button>
                 </Menu>
