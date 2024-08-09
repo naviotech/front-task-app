@@ -5,6 +5,11 @@ import ProjectView from "./pages/projects/ProjectView"
 import EditProject from "./pages/editProject/EditProject"
 import DetailProject from "./pages/detailProject/DetailProject"
 import { ListProvider } from "./context/useContextTask"
+import AuthLayout from "./layout/AuthLayout"
+import LoginView from "./pages/authenticate/LoginView"
+import RegisterView from "./pages/authenticate/RegisterView"
+import ConfirmAccountView from "./pages/authenticate/ConfirmAccountView"
+import NewTokenView from "./pages/authenticate/NewTokenView"
 
 
 function App() {
@@ -20,6 +25,13 @@ function App() {
             <Route path="/projects/:projectId" element={<DetailProject/>}/>
             <Route path="/projects/:projectId/:taskId" element={<DetailProject/>}/>
             <Route path="/projects/:projectId/:taskId/status" element={<DetailProject/>}/>
+          </Route>
+
+          <Route element={<AuthLayout/>}>
+            <Route path='/auth/login' element={<LoginView/>} />
+            <Route path='/auth/register' element={<RegisterView/>} />
+            <Route path='/auth/confirm-account' element={<ConfirmAccountView/>} />
+            <Route path='/auth/new-code' element={<NewTokenView/>} />
           </Route>
         </Routes>
       </ListProvider>

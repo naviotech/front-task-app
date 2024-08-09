@@ -213,7 +213,7 @@ type UpdateTaskStatusProps={
 export type DataApi = {
   data: { message?: string } | null
   error: string | null;
-};
+}
 export const updateTaskStatus = async({idProject,idTask,formData} : UpdateTaskStatusProps)=>{
   try {
     const { data } = await api.put(`/projects/${idProject}/tasks/${idTask}/status`, formData) as DataApi

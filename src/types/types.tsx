@@ -1,5 +1,21 @@
 import { z } from 'zod'
 
+
+// Auth
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const authSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  password: z.string(),
+  repeat_password: z.string()
+})
+
+export type Auth = z.infer<typeof authSchema>
+export type NewTokenForm = Pick<Auth, 'email'>
+export type UserLogin = Pick<Auth, 'email' | 'password'>
+export type UserRegistration = Pick<Auth, 'name' | 'email' | 'password' | 'repeat_password'>
+
 // Proyectos
 // eslint-disable-next-line react-refresh/only-export-components
 export const projectSchema = z.object({
