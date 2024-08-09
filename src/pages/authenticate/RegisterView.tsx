@@ -36,8 +36,8 @@ export default function RegisterView() {
 
   return (
     <>
-      <h1 className="text-5xl font-black text-white">Crear Cuenta</h1>
-      <p className="mt-5 text-2xl font-light text-white">
+      <h1 className="text-3xl font-black text-white">Crear Cuenta</h1>
+      <p className="mt-5 text-xl font-light text-white">
         Llena el formulario para {''}
         <span className="font-bold text-fuchsia-500"> crear tu cuenta</span>
       </p>

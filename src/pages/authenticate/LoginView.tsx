@@ -34,6 +34,11 @@ export default function LoginView() {
 
   return (
     <>
+      <h1 className="text-3xl font-black text-white">Login</h1>
+      <p className="mt-5 mb-8 text-xl font-light text-white">
+          Introduce tu e-mail y contraseña para {''}
+          <span className="font-bold text-fuchsia-500">iniciar sesión</span>
+      </p>
       <form
         onSubmit={handleSubmit(handleLogin)}
         className="p-10 space-y-8 bg-white rounded-2xl"

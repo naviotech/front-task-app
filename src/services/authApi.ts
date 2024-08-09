@@ -1,7 +1,6 @@
 import api from "../utils/axios"
 import { isAxiosError } from "axios"
 import {  dataApi, NewTokenForm, UserLogin, UserRegistration } from "../types/types"
-import { DataApi } from "./taskApi"
 import { TokenProps } from "../pages/authenticate/ConfirmAccountView"
 
 export const createAccount = async(formdata: UserRegistration)=>{
@@ -105,9 +104,9 @@ export const newToken = async(email: NewTokenForm)=>{
 
 export const loginAccount = async(dates: UserLogin)=>{
   try {
-    const {data} = await api.post('/auth/login', dates) as DataApi
-    console.log(data)
-    const response : DataApi = {
+    const {data} = await api.post('/auth/login', dates) as dataApi
+    
+    const response : dataApi = {
       data: data,
       error: null
     }
@@ -116,9 +115,9 @@ export const loginAccount = async(dates: UserLogin)=>{
   } catch (error) {
     let errorMessage : string 
     
-    if (isAxiosError(error) && error?.response?.data?.errors[0]?.msg) {
+    if (isAxiosError(error) && error?.response?.data?.error) {
       // Es un error de Axios con mensaje de respuesta
-      errorMessage = error.response.data.errors[0].msg
+      errorMessage = error.response.data.error
     } else if (error instanceof Error) {
       // Es un error estándar
       errorMessage = error.message
@@ -127,7 +126,11 @@ export const loginAccount = async(dates: UserLogin)=>{
       errorMessage = String(error)
     }
 
-    return errorMessage
+    const response : dataApi = {
+      data: null,
+      error: errorMessage
+    }
+    return response
   }
 
   

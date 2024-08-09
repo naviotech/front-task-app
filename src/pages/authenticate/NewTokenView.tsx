@@ -32,7 +32,7 @@ export default function NewTokenView() {
 
     return (
         <>
-            <h1 className="text-2xl font-black text-white">Solicitar Código de Confirmación</h1>
+            <h1 className="text-3xl font-black text-white">Solicitar Código de Confirmación</h1>
             <p className="mt-5 text-xl font-light text-white">
                 Coloca tu e-mail para recibir {''}
                 <span className="font-bold text-fuchsia-500"> un nuevo código</span>
