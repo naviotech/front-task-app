@@ -27,7 +27,7 @@ export default function ConfirmAccountView() {
       if(response.data){
         toast.success(response.data)
       }
-      if(typeof response.error === 'string'){
+      if(response.error){
         toast.error(response.error)
       }
       

@@ -41,7 +41,7 @@ export const ProjectById = projectSchema.extend({
 
 export type dataApi = {
   data: string | null
-  error: unknown
+  error: string | null
   
 }
 

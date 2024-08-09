@@ -15,10 +15,11 @@ export default function NewTokenView() {
     const handleRequestCode = async(email: NewTokenForm) => {
       try{
         const response = await newToken(email) as dataApi
+        
         if(response.data){
           toast.success(response.data)
         }
-        if(response.error === 'string'){
+        if(response.error){
           toast.error(response.error)
         }
         reset()

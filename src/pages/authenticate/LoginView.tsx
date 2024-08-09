@@ -18,11 +18,11 @@ export default function LoginView() {
   const handleLogin = async(formData: UserLogin) => { 
       try{
           const response = await loginAccount(formData) as dataApi
-          console.log(response)
+          
           if(response.data){
             toast.success(response.data)
           }
-          if(response.error === 'string'){
+          if(response.error){
             toast.error(response.error)
           }
           reset()
@@ -87,11 +87,27 @@ export default function LoginView() {
         />
       </form>
 
-      <nav className="flex items-center justify-center gap-2 mt-4 text-gray-400">
-        Aún no tienes Cuenta?
-        <Link to={'/auth/register'} className="font-bold text-violet-600 hover:text-violet-400">
-        Regístrate
-        </Link>
+
+      <nav className="flex flex-col gap-2 mt-10 ">
+        <div className="flex items-center justify-center gap-2 text-gray-400">
+          Aún no tienes Cuenta?
+          <Link
+              to='/auth/register'
+              className="font-bold text-violet-600 hover:text-violet-400">
+                Regístrate
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 text-gray-400">
+          Olvidaste tu contraseña?
+          <Link
+              to='/auth/forgot-password'
+              className="font-bold text-violet-600 hover:text-violet-400"
+          >
+                Reestablecer
+          </Link>
+        </div>
+                
       </nav>
     </>
   )

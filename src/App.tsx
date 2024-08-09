@@ -10,6 +10,8 @@ import LoginView from "./pages/authenticate/LoginView"
 import RegisterView from "./pages/authenticate/RegisterView"
 import ConfirmAccountView from "./pages/authenticate/ConfirmAccountView"
 import NewTokenView from "./pages/authenticate/NewTokenView"
+import ForgotPasswordView from "./pages/authenticate/ForgotPasswordView"
+import NewPasswordView from "./pages/authenticate/NewPasswordView"
 
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
             <Route path='/auth/register' element={<RegisterView/>} />
             <Route path='/auth/confirm-account' element={<ConfirmAccountView/>} />
             <Route path='/auth/new-code' element={<NewTokenView/>} />
+            <Route path='/auth/forgot-password' element={<ForgotPasswordView/>} />
+            <Route path='/auth/forgot-password' element={<NewPasswordView/>} />
           </Route>
         </Routes>
       </ListProvider>

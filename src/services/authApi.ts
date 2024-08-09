@@ -1,14 +1,14 @@
 import api from "../utils/axios"
 import { isAxiosError } from "axios"
-import { NewTokenForm, UserLogin, UserRegistration } from "../types/types"
+import {  dataApi, NewTokenForm, UserLogin, UserRegistration } from "../types/types"
 import { DataApi } from "./taskApi"
 import { TokenProps } from "../pages/authenticate/ConfirmAccountView"
 
 export const createAccount = async(formdata: UserRegistration)=>{
   try {
-    const {data} = await api.post('/auth/create-account', formdata) as DataApi
+    const {data} = await api.post('/auth/create-account', formdata) as dataApi
     console.log(data)
-    const response : DataApi = {
+    const response : dataApi = {
       data: data,
       error: null
     }
@@ -17,9 +17,9 @@ export const createAccount = async(formdata: UserRegistration)=>{
   } catch (error) {
     let errorMessage : string 
     
-    if (isAxiosError(error) && error?.response?.data?.errors[0]?.msg) {
+    if (isAxiosError(error) && error?.response?.data?.error) {
       // Es un error de Axios con mensaje de respuesta
-      errorMessage = error.response.data.errors[0].msg
+      errorMessage = error.response.data.error
     } else if (error instanceof Error) {
       // Es un error estándar
       errorMessage = error.message
@@ -28,15 +28,19 @@ export const createAccount = async(formdata: UserRegistration)=>{
       errorMessage = String(error)
     }
 
-    return errorMessage
+    const response : dataApi = {
+      data: null,
+      error: errorMessage
+    }
+    return response
   }
 }
 
 export const confirmAccount = async(token: TokenProps)=>{
   try {
-    const {data} = await api.post('/auth/confirm-account', token) as DataApi
+    const {data} = await api.post('/auth/confirm-account', token) as dataApi
     console.log(data)
-    const response : DataApi = {
+    const response : dataApi = {
       data: data,
       error: null
     }
@@ -45,9 +49,9 @@ export const confirmAccount = async(token: TokenProps)=>{
   } catch (error) {
     let errorMessage : string 
     
-    if (isAxiosError(error) && error?.response?.data?.errors[0]?.msg) {
+    if (isAxiosError(error) && error?.response?.data?.error) {
       // Es un error de Axios con mensaje de respuesta
-      errorMessage = error.response.data.errors[0].msg
+      errorMessage = error.response.data.error
     } else if (error instanceof Error) {
       // Es un error estándar
       errorMessage = error.message
@@ -56,7 +60,11 @@ export const confirmAccount = async(token: TokenProps)=>{
       errorMessage = String(error)
     }
 
-    return errorMessage
+    const response : dataApi = {
+      data: null,
+      error: errorMessage
+    }
+    return response
   }
 
   
@@ -64,20 +72,21 @@ export const confirmAccount = async(token: TokenProps)=>{
 
 export const newToken = async(email: NewTokenForm)=>{
   try {
-    const {data} = await api.post('/auth/new_token', email) as DataApi
+    const {data} = await api.post('/auth/new_token', email) as dataApi
     console.log(data)
-    const response : DataApi = {
+    const response : dataApi = {
       data: data,
       error: null
     }
 
     return response
   } catch (error) {
+    console.log(error)
     let errorMessage : string 
     
-    if (isAxiosError(error) && error?.response?.data?.errors[0]?.msg) {
+    if (isAxiosError(error) && error?.response?.data?.error) {
       // Es un error de Axios con mensaje de respuesta
-      errorMessage = error.response.data.errors[0].msg
+      errorMessage = error.response.data.error
     } else if (error instanceof Error) {
       // Es un error estándar
       errorMessage = error.message
@@ -85,8 +94,11 @@ export const newToken = async(email: NewTokenForm)=>{
       // Es algún otro tipo de error
       errorMessage = String(error)
     }
-
-    return errorMessage
+    const response : dataApi = {
+      data: null,
+      error: errorMessage
+    }
+    return response
   } 
 }
 
@@ -119,4 +131,37 @@ export const loginAccount = async(dates: UserLogin)=>{
   }
 
   
+}
+
+export const forgotPassword = async(email: NewTokenForm)=>{
+  try {
+    const {data} = await api.post('/auth/forgot-password', email) as dataApi
+    
+    
+    const response : dataApi = {
+      data: data,
+      error: null
+    }
+
+    return response
+  } catch (error) {
+    console.log(error)
+    let errorMessage : string 
+    
+    if (isAxiosError(error) && error?.response?.data?.error) {
+      // Es un error de Axios con mensaje de respuesta
+      errorMessage = error.response.data.error
+    } else if (error instanceof Error) {
+      // Es un error estándar
+      errorMessage = error.message
+    } else {
+      // Es algún otro tipo de error
+      errorMessage = String(error)
+    }
+    const response : dataApi = {
+      data: null,
+      error: errorMessage
+    }
+    return response
+  } 
 }

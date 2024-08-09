@@ -24,7 +24,7 @@ export default function RegisterView() {
       if(response.data){
         toast.success(response.data)
       }
-      if(typeof response.error === 'string'){
+      if(response.error){
         toast.error(response.error)
       }
       reset()
@@ -137,11 +137,26 @@ export default function RegisterView() {
           className="w-full p-3 text-xl font-black text-white cursor-pointer bg-fuchsia-600 hover:bg-fuchsia-700 rounded-2xl"
         />
       </form>
-      <nav className="flex items-center justify-center gap-2 mx-auto mt-4 text-gray-400">
-        Ya tienes Cuenta?
-        <Link to={'/auth/login'} className="font-bold text-violet-600 hover:text-violet-400">
-        Inicia Sesión
-        </Link>
+      
+      <nav className="flex flex-col gap-2 mt-10 ">
+        <div className="flex items-center justify-center gap-2 text-gray-400">
+          Ya tienes Cuenta?
+          <Link
+              to='/auth/login'
+              className="font-bold text-violet-600 hover:text-violet-400">
+                Inicia Sesión
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 text-gray-400">
+          Olvidaste tu contraseña?
+          <Link
+              to='/auth/forgot-password'
+              className="font-bold text-violet-600 hover:text-violet-400"
+          >
+                Reestablecer
+          </Link>
+        </div>
       </nav>
     </>
   )
